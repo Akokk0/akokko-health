@@ -35,4 +35,16 @@ public class CheckitemController {
         PageResult pageResult = checkitemService.findPage(queryPageBean);
         return pageResult;
     }
+
+    @RequestMapping("/delete")
+    public Result delete(Integer id) {
+        try {
+            checkitemService.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_CHECKITEM_FAIL);
+        }
+
+        return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
+    }
 }

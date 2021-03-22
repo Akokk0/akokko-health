@@ -9,4 +9,7 @@ public interface CheckitemDao {
 
     Page<CheckItem> findPage(String queryString);
 
+    Long findCheckitemById(Integer id);
+
+    void deleteById(Integer id);
 }

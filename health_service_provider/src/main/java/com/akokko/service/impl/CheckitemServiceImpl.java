@@ -45,5 +45,13 @@ public class CheckitemServiceImpl implements CheckitemService {
         return new PageResult(total, rows);
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        //判断该检查项是否包含在检查组里
+        Long count = checkitemDao.findCheckitemById(id);
+        if (count > 0) new RuntimeException();  //说明该检查项包含在检查组里
 
+        //没有进到if里说明没有检查组包含该检查项
+        checkitemDao.deleteById(id);
+    }
 }

@@ -293,6 +293,29 @@
                 },
                 // 删除
                 handleDelete(row) {
+                    this.$confirm("你确定要删除吗？", "警告", {
+                        type: "warning"
+                    }).then(() => {
+                        axios.get("/checkitem/delete.do?id=" + row.id).then((res) => {
+                            if (res.data.flag) {  //说明操作执行成功
+                                //输出提示信息
+                                this.$message({
+                                    type : "success",
+                                    message : res.data.message
+                                });
+                                //重执行查找页面
+                                this.findPage();
+                            } else {  //操作执行失败
+                                //输出提示信息
+                                this.$message.error("删除失败！")
+                            }
+                        });
+                    }).catch(() => {
+                        this.$message({
+                            type : "info",
+                            message : "取消删除"
+                        })
+                    })
                 }
             }
         })
