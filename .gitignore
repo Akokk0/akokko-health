@@ -1,6 +1,5 @@
 target/
 *.iml
-.idea/
 rebel.xml
 .rebel.xml.bak
 out/artifacts/
