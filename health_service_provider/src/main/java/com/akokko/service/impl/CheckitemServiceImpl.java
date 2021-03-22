@@ -1,6 +1,8 @@
 package com.akokko.service.impl;
 
 import com.akokko.dao.CheckitemDao;
+import com.akokko.entity.PageResult;
+import com.akokko.entity.QueryPageBean;
 import com.akokko.pojo.CheckItem;
 import com.akokko.service.CheckitemService;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -18,4 +20,14 @@ public class CheckitemServiceImpl implements CheckitemService {
     public void add(CheckItem checkItem) {
         checkitemDao.add(checkItem);
     }
+
+    @Override
+    public PageResult pageQuary(QueryPageBean queryPageBean) {
+        Integer pageSize = queryPageBean.getPageSize();
+
+        Integer currentPage = queryPageBean.getCurrentPage();
+
+        return null;
+    }
+
 }

@@ -225,6 +225,7 @@
             },
             //钩子函数，VUE对象初始化完成后自动执行
             created() {
+                this.findPage();
             },
             methods: {
                 //编辑
@@ -259,6 +260,17 @@
                 },
                 //分页查询
                 findPage() {
+                    //定义参数json
+                    var param = {
+                        currentPage : this.pagination.currentPage,
+                        pageSize : this.pagination.pageSize,
+                        queryString : this.pagination.queryString
+                    }
+                    //发送ajax请求
+                    axios.post("/checkitem/findPage.do", param).then((res) => {
+                        this.pagination.total = res.data.total;
+                        this.dataList = res.data.rows;
+                    })
                 },
                 // 重置表单
                 resetForm() {
@@ -274,6 +286,10 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    //将获取到的当前页赋值给Vue模型函数
+                    this.pagination.currentPage = currentPage;
+                    //调用分页查询方法
+                    this.findPage();
                 },
                 // 删除
                 handleDelete(row) {

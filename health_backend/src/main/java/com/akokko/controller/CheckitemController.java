@@ -1,6 +1,8 @@
 package com.akokko.controller;
 
 import com.akokko.constant.MessageConstant;
+import com.akokko.entity.PageResult;
+import com.akokko.entity.QueryPageBean;
 import com.akokko.entity.Result;
 import com.akokko.pojo.CheckItem;
 import com.akokko.service.CheckitemService;
@@ -26,5 +28,11 @@ public class CheckitemController {
         }
 
         return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
+    }
+
+    @RequestMapping("/findPage")
+    public PageResult pageQuary(@RequestBody QueryPageBean queryPageBean) {
+        PageResult pageResult = checkitemService.findPage(queryPageBean);
+        return pageResult;
     }
 }
