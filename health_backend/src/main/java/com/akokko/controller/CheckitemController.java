@@ -31,7 +31,7 @@ public class CheckitemController {
     }
 
     @RequestMapping("/findPage")
-    public PageResult pageQuary(@RequestBody QueryPageBean queryPageBean) {
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = checkitemService.findPage(queryPageBean);
         return pageResult;
     }

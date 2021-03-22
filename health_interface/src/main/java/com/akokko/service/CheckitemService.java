@@ -7,5 +7,5 @@ import com.akokko.pojo.CheckItem;
 public interface CheckitemService {
     void add(CheckItem checkItem);
 
-    PageResult pageQuary(QueryPageBean queryPageBean);
+    PageResult findPage(QueryPageBean queryPageBean);
 }
