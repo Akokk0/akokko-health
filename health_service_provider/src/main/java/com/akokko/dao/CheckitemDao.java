@@ -12,4 +12,8 @@ public interface CheckitemDao {
     Long findCheckitemById(Integer id);
 
     void deleteById(Integer id);
+
+    CheckItem findById(Integer id);
+
+    void edit(CheckItem checkItem);
 }

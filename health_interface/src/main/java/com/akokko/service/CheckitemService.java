@@ -10,4 +10,8 @@ public interface CheckitemService {
     PageResult findPage(QueryPageBean queryPageBean);
 
     void deleteById(Integer id);
+
+    CheckItem findById(Integer id);
+
+    void edit(CheckItem checkItem);
 }

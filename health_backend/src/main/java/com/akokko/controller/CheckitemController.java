@@ -47,4 +47,27 @@ public class CheckitemController {
 
         return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
+
+    @RequestMapping("/findById")
+    public Result edit(Integer id) {
+        try {
+            CheckItem checkItem = checkitemService.findById(id);
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItem);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
+        }
+    }
+
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody CheckItem checkItem) {
+        try {
+            checkitemService.edit(checkItem);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.EDIT_CHECKITEM_FAIL);
+        }
+
+        return new Result(true, MessageConstant.EDIT_CHECKITEM_SUCCESS);
+    }
 }

@@ -54,4 +54,16 @@ public class CheckitemServiceImpl implements CheckitemService {
         //没有进到if里说明没有检查组包含该检查项
         checkitemDao.deleteById(id);
     }
+
+    @Override
+    public CheckItem findById(Integer id) {
+        //从数据库中查询对应ID Checkitem对象
+        CheckItem checkItem = checkitemDao.findById(id);
+        return checkItem;
+    }
+
+    @Override
+    public void edit(CheckItem checkItem) {
+        checkitemDao.edit(checkItem);
+    }
 }
