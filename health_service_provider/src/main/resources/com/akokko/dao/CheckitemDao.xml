@@ -59,4 +59,8 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findAll" resultType="com.akokko.pojo.CheckItem">
+        select * from t_checkitem
+    </select>
 </mapper>
