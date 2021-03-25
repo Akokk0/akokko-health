@@ -24,12 +24,12 @@ public class CheckgroupServiceImpl implements CheckgroupService {
             //将检查组信息写入到t_checkgroup
             checkgroupDao.add(checkGroup);
             //获取刚添加进数据库的id值
-            Integer id = checkGroup.getId();
+            Integer checkgroupId = checkGroup.getId();
             //遍历循环将检查项与检查组绑定
             for (Integer checkitemId : checkitemIds) {
                 Map<String, Integer> map = new HashMap<>();
-                map.put("checkgroupId", checkitemId);
-                map.put("checkitemId", id);
+                map.put("checkitemId", checkitemId);
+                map.put("checkgroupId", checkgroupId);
                 checkgroupDao.connectionItemAndGroup(map);
             }
         } else {

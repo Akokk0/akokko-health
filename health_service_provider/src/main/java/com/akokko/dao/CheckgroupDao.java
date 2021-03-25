@@ -7,5 +7,5 @@ import java.util.Map;
 public interface CheckgroupDao {
     void add(CheckGroup checkGroup);
 
-    void connectionItemAndGroup(Map<String,Integer> map);
+    void connectionItemAndGroup(Map map);
 }

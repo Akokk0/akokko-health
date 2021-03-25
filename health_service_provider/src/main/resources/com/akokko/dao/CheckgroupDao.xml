@@ -12,9 +12,9 @@
         (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
     </insert>
 
-    <insert id="connectionItemAndGroup" parameterType="map">
-        insert into t_checkgroup_checkitem(t_checkgroup,t_checkitem)
+    <insert id="connectionItemAndGroup" parameterType="java.util.Map">
+        insert into t_checkgroup_checkitem(checkgroup_id,checkitem_id)
         values
-            (#{t_checkgroup},#{t_checkitem})
+        (#{checkgroupId},#{checkitemId})
     </insert>
 </mapper>
