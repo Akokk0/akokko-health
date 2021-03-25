@@ -29,6 +29,10 @@
         select * from t_checkgroup where id = #{id}
     </select>
 
+    <select id="findItemByGroup" parameterType="int" resultType="int">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </select>
+
     <update id="edit" parameterType="com.akokko.pojo.CheckGroup">
         update t_checkgroup
         <set>

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/checkgroup")
 public class CheckgroupController {
@@ -42,6 +44,17 @@ public class CheckgroupController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
+
+    @RequestMapping("/findItemByGroup")
+    public Result findItemByGroup(Integer id) {
+        try {
+            List<Integer> checkitemIds = checkgroupService.findItemByGroup(id);
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkitemIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
         }
     }
 

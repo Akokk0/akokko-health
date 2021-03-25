@@ -291,7 +291,7 @@
                                 //编辑成功
                                 this.$message({
                                     type: "success",
-                                    message: res.data.message;
+                                    message: res.data.message
                                 });
                             } else {
                                 this.$message.error(res.data.message);
@@ -362,6 +362,8 @@
                 handleUpdate(row) {
                     //清空表单数据
                     this.formData = {};
+                    //将卡片默认弹出为第一项
+                    this.activeName = 'first';
                     //将编辑页面展示出来
                     this.dialogFormVisible4Edit = true;
                     //发送ajax请求回显数据
@@ -371,6 +373,18 @@
                             this.formData = res.data.data;
                         } else {
                             //数据回显失败
+                            this.$message.error(res.data.message);
+                        }
+                    });
+                    //发送ajax请求查看所有检查项
+                    axios.get("/checkitem/findAll.do").then((res) => {
+                        if (res.data.flag) {  //查询成功
+                            this.tableData = res.data.data;
+                            //发送Ajax请求查询有哪些项目被选中
+                            axios.get("/checkgroup/findItemByGroup.do?id=" + row.id).then((res) => {
+                                this.checkitemIds = res.data.data;
+                            });
+                        } else {  //查询失败
                             this.$message.error(res.data.message);
                         }
                     });

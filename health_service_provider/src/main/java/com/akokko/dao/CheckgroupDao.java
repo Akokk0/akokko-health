@@ -3,6 +3,7 @@ package com.akokko.dao;
 import com.akokko.pojo.CheckGroup;
 import com.github.pagehelper.Page;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CheckgroupDao {
@@ -15,4 +16,6 @@ public interface CheckgroupDao {
     CheckGroup findById(Integer id);
 
     void edit(CheckGroup checkGroup);
+
+    List<Integer> findItemByGroup(Integer id);
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service(interfaceClass = CheckgroupService.class)
@@ -64,7 +65,13 @@ public class CheckgroupServiceImpl implements CheckgroupService {
     }
 
     @Override
+    public List<Integer> findItemByGroup(Integer id) {
+        return checkgroupDao.findItemByGroup(id);
+    }
+
+    @Override
     public void edit(CheckGroup checkGroup) {
         checkgroupDao.edit(checkGroup);
     }
+
 }
