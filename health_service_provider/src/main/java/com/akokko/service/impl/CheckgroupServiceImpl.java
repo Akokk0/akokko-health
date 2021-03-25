@@ -57,4 +57,14 @@ public class CheckgroupServiceImpl implements CheckgroupService {
         //返回结果
         return new PageResult(page.getTotal(), page.getResult());
     }
+
+    @Override
+    public CheckGroup findById(Integer id) {
+        return checkgroupDao.findById(id);
+    }
+
+    @Override
+    public void edit(CheckGroup checkGroup) {
+        checkgroupDao.edit(checkGroup);
+    }
 }

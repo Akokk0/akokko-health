@@ -282,6 +282,25 @@
             methods: {
                 //编辑
                 handleEdit() {
+                    this.$confirm("你确定要提交吗？", "提示", {
+                        type: "info"
+                    }).then(() => {
+                        axios.post("checkgroup/edit", this.formData).then((res) => {
+                            this.dialogFormVisible4Edit = false;
+                            if (res.data.flag) {
+                                //编辑成功
+                                this.$message({
+                                    type: "success",
+                                    message: res.data.message;
+                                });
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        }).finally(() => {
+                            this.findPage();
+                        });
+                    }).catch(() => {
+                    });
                 },
                 //添加
                 handleAdd () {
@@ -341,6 +360,20 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    //清空表单数据
+                    this.formData = {};
+                    //将编辑页面展示出来
+                    this.dialogFormVisible4Edit = true;
+                    //发送ajax请求回显数据
+                    axios.get("/checkgroup/findById.do?id=" + row.id).then((res) => {
+                        if (res.data.flag) {
+                            //数据回显成功
+                            this.formData = res.data.data;
+                        } else {
+                            //数据回显失败
+                            this.$message.error(res.data.message);
+                        }
+                    });
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {

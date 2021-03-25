@@ -10,4 +10,8 @@ public interface CheckgroupService {
 
     PageResult findPage(QueryPageBean queryPageBean);
 
+    CheckGroup findById(Integer id);
+
+    void edit(CheckGroup checkGroup);
+
 }

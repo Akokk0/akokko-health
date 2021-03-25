@@ -24,4 +24,33 @@
             where code = #{value} or name = #{value} or helpCode = #{value}
         </if>
     </select>
+
+    <select id="findById" parameterType="int" resultType="com.akokko.pojo.CheckGroup">
+        select * from t_checkgroup where id = #{id}
+    </select>
+
+    <update id="edit" parameterType="com.akokko.pojo.CheckGroup">
+        update t_checkgroup
+        <set>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="helpCode != null">
+                helpCode = #{helpCode},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
