@@ -301,6 +301,17 @@
                 },
                 //分页查询
                 findPage() {
+                    //封装分页参数
+                    var param = {
+                        currentPage: this.pagination.currentPage,
+                        pageSize: this.pagination.pageSize,
+                        queryString: this.pagination.queryString
+                    }
+                    //发送ajax请求
+                    axios.post("/checkgroup/findPage.do", param).then((res) => {
+                        this.dataList = res.data.rows;
+                        this.pagination.total = res.data.total;
+                    });
                 },
                 // 重置表单
                 resetForm() {
@@ -333,6 +344,10 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    //将最新的当前页码赋值给模型数据
+                    this.pagination.currentPage = currentPage;
+                    //再调用分页查询方法
+                    this.findPage();
                 },
                 // 删除
                 handleDelete(row) {

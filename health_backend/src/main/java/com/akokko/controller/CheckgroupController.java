@@ -1,6 +1,8 @@
 package com.akokko.controller;
 
 import com.akokko.constant.MessageConstant;
+import com.akokko.entity.PageResult;
+import com.akokko.entity.QueryPageBean;
 import com.akokko.entity.Result;
 import com.akokko.pojo.CheckGroup;
 import com.akokko.service.CheckgroupService;
@@ -25,5 +27,10 @@ public class CheckgroupController {
             return new Result(false, MessageConstant.ADD_CHECKGROUP_FAIL);
         }
         return new Result(true, MessageConstant.ADD_CHECKGROUP_SUCCESS);
+    }
+
+    @RequestMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
+        return checkgroupService.findPage(queryPageBean);
     }
 }

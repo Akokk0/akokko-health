@@ -1,9 +1,13 @@
 package com.akokko.service.impl;
 
 import com.akokko.dao.CheckgroupDao;
+import com.akokko.entity.PageResult;
+import com.akokko.entity.QueryPageBean;
 import com.akokko.pojo.CheckGroup;
 import com.akokko.service.CheckgroupService;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,5 +39,22 @@ public class CheckgroupServiceImpl implements CheckgroupService {
         } else {
             new RuntimeException();
         }
+    }
+
+    @Override
+    public PageResult findPage(QueryPageBean queryPageBean) {
+        //获取参数
+        Integer currentPage = queryPageBean.getCurrentPage();
+        Integer pageSize = queryPageBean.getPageSize();
+        String queryString = queryPageBean.getQueryString();
+
+        //开启分页助手
+        PageHelper.startPage(currentPage, pageSize);
+
+        //调用dao进行查询
+        Page<CheckGroup> page = checkgroupDao.findPageByCondition(queryString);
+
+        //返回结果
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }
