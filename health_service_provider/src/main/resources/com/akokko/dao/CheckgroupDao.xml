@@ -62,4 +62,7 @@
         delete from t_checkgroup_checkitem where checkgroup_id = #{id}
     </delete>
 
+    <delete id="deleteGroup" parameterType="int">
+        delete from t_checkgroup where id = #{id}
+    </delete>
 </mapper>

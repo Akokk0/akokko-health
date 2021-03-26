@@ -74,6 +74,14 @@ public class CheckgroupServiceImpl implements CheckgroupService {
         this.connectionItemAndGroup(checkGroup.getId(), checkitemIds);
     }
 
+    @Override
+    public void delete(Integer id) {
+        //删除检查组与检查项的关联关系
+        checkgroupDao.deleteAssociation(id);
+        //删除t_checkgroup中检查组数据
+        checkgroupDao.deleteGroup(id);
+    }
+
     //将检查项与检查组建立连接
     public void connectionItemAndGroup(Integer checkgroupId, Integer[] checkitemIds) {
         //遍历循环将检查项与检查组绑定

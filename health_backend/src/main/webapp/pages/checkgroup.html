@@ -401,6 +401,28 @@
                 },
                 // 删除
                 handleDelete(row) {
+                    this.$confirm("你确定要删除吗？", "警告", {
+                        type : "warning"
+                    }).then(() => {
+                        //发送Ajax请求删除数据
+                        axios.get("/checkgroup/delete.do?id=" + row.id).then((res) => {
+                            if (res.data.flag) {
+                                this.$message({
+                                    type : "success",
+                                    message : res.data.message
+                                });
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        }).finally(() => {
+                            this.findPage();
+                        });
+                    }).catch(() => {
+                        this.$message({
+                            type : "info",
+                            message : "取消删除"
+                        });
+                    });
                 }
             }
         })

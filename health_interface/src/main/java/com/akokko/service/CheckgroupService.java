@@ -18,4 +18,6 @@ public interface CheckgroupService {
 
     List<Integer> findItemByGroup(Integer id);
 
+    void delete(Integer id);
+
 }

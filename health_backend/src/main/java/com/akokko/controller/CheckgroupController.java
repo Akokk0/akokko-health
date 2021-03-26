@@ -68,4 +68,15 @@ public class CheckgroupController {
         }
         return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
     }
+
+    @RequestMapping("/delete")
+    public Result delete(Integer id) {
+        try {
+            checkgroupService.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_CHECKGROUP_FAIL);
+        }
+        return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+    }
 }
