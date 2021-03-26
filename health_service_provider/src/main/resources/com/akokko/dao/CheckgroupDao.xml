@@ -57,4 +57,9 @@
         </set>
         where id = #{id}
     </update>
+
+    <delete id="deleteAssociation" parameterType="int">
+        delete from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </delete>
+
 </mapper>

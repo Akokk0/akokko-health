@@ -30,13 +30,8 @@ public class CheckgroupServiceImpl implements CheckgroupService {
             checkgroupDao.add(checkGroup);
             //获取刚添加进数据库的id值
             Integer checkgroupId = checkGroup.getId();
-            //遍历循环将检查项与检查组绑定
-            for (Integer checkitemId : checkitemIds) {
-                Map<String, Integer> map = new HashMap<>();
-                map.put("checkitemId", checkitemId);
-                map.put("checkgroupId", checkgroupId);
-                checkgroupDao.connectionItemAndGroup(map);
-            }
+            //将选中的检查项与检查组关联
+            this.connectionItemAndGroup(checkgroupId, checkitemIds);
         } else {
             new RuntimeException();
         }
@@ -70,8 +65,23 @@ public class CheckgroupServiceImpl implements CheckgroupService {
     }
 
     @Override
-    public void edit(CheckGroup checkGroup) {
+    public void edit(CheckGroup checkGroup, Integer[] checkitemIds) {
+        //将修改的检查组数据添加到数据库中
         checkgroupDao.edit(checkGroup);
+        //将检查组与检查项的所有关联关系删除
+        checkgroupDao.deleteAssociation(checkGroup.getId());
+        //将选中的检查项与检查组关联
+        this.connectionItemAndGroup(checkGroup.getId(), checkitemIds);
     }
 
+    //将检查项与检查组建立连接
+    public void connectionItemAndGroup(Integer checkgroupId, Integer[] checkitemIds) {
+        //遍历循环将检查项与检查组绑定
+        for (Integer checkitemId : checkitemIds) {
+            Map<String, Integer> map = new HashMap<>();
+            map.put("checkitemId", checkitemId);
+            map.put("checkgroupId", checkgroupId);
+            checkgroupDao.connectionItemAndGroup(map);
+        }
+    }
 }

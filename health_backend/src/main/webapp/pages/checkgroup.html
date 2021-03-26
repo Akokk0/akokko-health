@@ -285,8 +285,10 @@
                     this.$confirm("你确定要提交吗？", "提示", {
                         type: "info"
                     }).then(() => {
-                        axios.post("checkgroup/edit", this.formData).then((res) => {
-                            this.dialogFormVisible4Edit = false;
+                        //关闭编辑窗口
+                        this.dialogFormVisible4Edit = false;
+                        //发送Ajax请求将修改数据添加到数据库
+                        axios.post("/checkgroup/edit.do?checkitemIds=" + this.checkitemIds, this.formData).then((res) => {
                             if (res.data.flag) {
                                 //编辑成功
                                 this.$message({
@@ -362,6 +364,7 @@
                 handleUpdate(row) {
                     //清空表单数据
                     this.formData = {};
+                    this.checkitemIds = [];
                     //将卡片默认弹出为第一项
                     this.activeName = 'first';
                     //将编辑页面展示出来
