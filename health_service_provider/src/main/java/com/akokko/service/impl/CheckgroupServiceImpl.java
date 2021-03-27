@@ -82,6 +82,11 @@ public class CheckgroupServiceImpl implements CheckgroupService {
         checkgroupDao.deleteGroup(id);
     }
 
+    @Override
+    public List<CheckGroup> findAll() {
+        return checkgroupDao.findAll();
+    }
+
     //将检查项与检查组建立连接
     public void connectionItemAndGroup(Integer checkgroupId, Integer[] checkitemIds) {
         //遍历循环将检查项与检查组绑定

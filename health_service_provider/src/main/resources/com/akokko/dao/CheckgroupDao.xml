@@ -65,4 +65,8 @@
     <delete id="deleteGroup" parameterType="int">
         delete from t_checkgroup where id = #{id}
     </delete>
+
+    <select id="findAll" resultType="com.akokko.pojo.CheckGroup">
+        select * from t_checkgroup
+    </select>
 </mapper>
