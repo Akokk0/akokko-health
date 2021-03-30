@@ -24,17 +24,12 @@ public class CheckgroupServiceImpl implements CheckgroupService {
 
     @Override
     public void add(CheckGroup checkGroup, Integer[] checkitemIds) {
-        //判断是否有选中的检查项，若没有则报错
-        if (checkitemIds != null && checkitemIds.length > 0) {
-            //将检查组信息写入到t_checkgroup
-            checkgroupDao.add(checkGroup);
-            //获取刚添加进数据库的id值
-            Integer checkgroupId = checkGroup.getId();
-            //将选中的检查项与检查组关联
-            this.connectionItemAndGroup(checkgroupId, checkitemIds);
-        } else {
-            new RuntimeException();
-        }
+        //将检查组信息写入到t_checkgroup
+        checkgroupDao.add(checkGroup);
+        //获取刚添加进数据库的id值
+        Integer checkgroupId = checkGroup.getId();
+        //将选中的检查项与检查组关联
+        this.connectionItemAndGroup(checkgroupId, checkitemIds);
     }
 
     @Override
@@ -89,12 +84,17 @@ public class CheckgroupServiceImpl implements CheckgroupService {
 
     //将检查项与检查组建立连接
     public void connectionItemAndGroup(Integer checkgroupId, Integer[] checkitemIds) {
-        //遍历循环将检查项与检查组绑定
-        for (Integer checkitemId : checkitemIds) {
-            Map<String, Integer> map = new HashMap<>();
-            map.put("checkitemId", checkitemId);
-            map.put("checkgroupId", checkgroupId);
-            checkgroupDao.connectionItemAndGroup(map);
+        //判断是否有选中的检查项，若没有则报错
+        if (checkitemIds != null && checkitemIds.length > 0) {
+            //遍历循环将检查项与检查组绑定
+            for (Integer checkitemId : checkitemIds) {
+                Map<String, Integer> map = new HashMap<>();
+                map.put("checkitemId", checkitemId);
+                map.put("checkgroupId", checkgroupId);
+                checkgroupDao.connectionItemAndGroup(map);
+            }
+        } else {
+            throw new RuntimeException();
         }
     }
 }

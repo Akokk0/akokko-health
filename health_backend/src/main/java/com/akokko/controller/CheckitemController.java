@@ -69,7 +69,6 @@ public class CheckitemController {
             e.printStackTrace();
             return new Result(false, MessageConstant.EDIT_CHECKITEM_FAIL);
         }
-
         return new Result(true, MessageConstant.EDIT_CHECKITEM_SUCCESS);
     }
 

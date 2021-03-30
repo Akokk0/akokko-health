@@ -23,6 +23,7 @@ public class CheckgroupController {
     @RequestMapping("/add")
     public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
+            if (checkitemIds == null && checkitemIds.length == 0) return new Result(false, MessageConstant.CHECK_CHECKITEM_NULL);
             checkgroupService.add(checkGroup, checkitemIds);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,6 +62,7 @@ public class CheckgroupController {
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
+            if (checkitemIds == null && checkitemIds.length == 0) return new Result(false, MessageConstant.CHECK_CHECKITEM_NULL);
             checkgroupService.edit(checkGroup, checkitemIds);
         } catch (Exception e) {
             e.printStackTrace();

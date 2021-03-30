@@ -64,4 +64,6 @@ public class MessageConstant {
     public static final String GET_BUSINESS_REPORT_FAIL = "获取运营统计数据失败";
     public static final String GET_SETMEAL_LIST_SUCCESS = "查询套餐列表数据成功";
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
+    public static final String CHECK_CHECKGROUP_NULL = "选择检查组不能为空";
+    public static final String CHECK_CHECKITEM_NULL = "选择检查项不能为空";
 }

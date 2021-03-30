@@ -252,6 +252,12 @@
             methods: {
                 //文件上传成功后的钩子，response为服务端返回的值，file为当前上传的文件封装成的js对象
                 handleAvatarSuccess(response, file) {
+                    this.imageUrl = "http://qqpvq5pwj.hd-bkt.clouddn.com/" + response.data;
+                    this.$message({
+                        type: response.flag ? "success" : "error",
+                        message: response.message
+                    });
+                    this.formData.img = response.data;
                 },
                 //上传图片之前执行
                 beforeAvatarUpload(file) {
@@ -267,21 +273,54 @@
                 },
                 //添加
                 handleAdd () {
+                    //关闭窗口
+                    this.dialogFormVisible = false;
+                    //发生Ajax请求
+                    axios.post("/setmeal/add.do?checkgroupIds=" + this.checkgroupIds, this.formData).then((res) => {
+                        if (res.data.flag) {
+                            this.$message({
+                                type: "success",
+                                message: res.data.message
+                            });
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    });
                 },
                 //分页查询
                 findPage() {
+                    //分页参数
+                    var param = {
+                        currentPage: this.pagination.currentPage,
+                        pageSize: this.pagination.pageSize,
+                        queryString: this.pagination.queryString
+                    }
+                    //发生Ajax请求
+                    axios.post("/setmeal/findPage.do",param).then((res) => {
+                        if (res.data.flag) {
+                            this.formData = res.data.rows;
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    });
                 },
                 // 重置表单
                 resetForm() {
+                    //将图片清空
+                    this.imageUrl = "";
+                    //将表单数据清空
+                    this.formData = {};
+                    //复选框清空
+                    this.checkgroupIds = [];
+                    //默认选到第一项
+                    this.activeName = 'first';
                 },
                 // 弹出添加窗口
                 handleCreate() {
+                    //重置表单
+                    this.resetForm();
                     //将页面展示出来
                     this.dialogFormVisible = true;
-                    //将表单数据清空
-                    this.formData = {};
-                    //默认选到第一项
-                    this.activeName = 'first';
                     //发送ajax请求查询检查组
                     axios.get("/checkgroup/findAll.do").then((res) => {
                         if (res.data.flag) {  //请求成功
@@ -293,6 +332,8 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    this.pagination.currentPage = currentPage;
+                    this.findPage();
                 }
             }
         })

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.akokko.dao.SetmealDao">
+    <!-- 新增 -->
+    <insert id="add" parameterType="com.akokko.pojo.Setmeal">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_setmeal(code,name,helpCode,sex,remark,attention,age,price,img)
+        values
+        (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention},#{age},#{price},#{img})
+    </insert>
+
+    <insert id="connectionSetmealAndCheckgroup" parameterType="map">
+        insert into t_setmeal_checkgroup(setmeal_id,checkgroup_id)
+        values
+        (#{setmealId},#{checkgroupId})
+    </insert>
+
+    <select id="findPage" parameterType="String" resultType="com.akokko.pojo.Setmeal">
+        select * from t_setmeal
+        <if test="value != null and value.length > 0">
+            where name = #{value} or helpCode = #{value} or remark = #{value}
+        </if>
+    </select>
+</mapper>
