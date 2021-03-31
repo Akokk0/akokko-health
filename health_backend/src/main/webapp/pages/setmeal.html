@@ -297,11 +297,8 @@
                     }
                     //发生Ajax请求
                     axios.post("/setmeal/findPage.do",param).then((res) => {
-                        if (res.data.flag) {
-                            this.formData = res.data.rows;
-                        } else {
-                            this.$message.error(res.data.message);
-                        }
+                        this.dataList = res.data.rows;
+                        this.pagination.total = res.data.total;
                     });
                 },
                 // 重置表单

@@ -1,6 +1,7 @@
 package com.akokko.controller;
 
 import com.akokko.constant.MessageConstant;
+import com.akokko.constant.RedisConstant;
 import com.akokko.entity.PageResult;
 import com.akokko.entity.QueryPageBean;
 import com.akokko.entity.Result;
@@ -36,7 +37,7 @@ public class SetmealController {
         String fileName = UUID.randomUUID().toString() + extention;
         try {
             QiniuUtils.upload2Qiniu(imgFile.getBytes(), fileName);
-            jedisPool.getResource().ping();
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, fileName);
             return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, fileName);
         } catch (IOException e) {
             e.printStackTrace();
