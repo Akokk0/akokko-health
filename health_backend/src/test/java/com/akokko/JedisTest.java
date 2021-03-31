@@ -5,7 +5,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 public class JedisTest {
-    @Test
+    /*@Test
     public void test1() {
         Jedis jedis = new Jedis("106.14.73.110", 6379);
         try {
@@ -14,5 +14,5 @@ public class JedisTest {
                 JedisConnectionException e) {
             System.err.println("连接超时");
         }
-    }
+    }*/
 }
