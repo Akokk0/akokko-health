@@ -95,8 +95,8 @@
                         <el-table-column prop="remark" label="说明" align="center"></el-table-column>
                         <el-table-column label="操作" align="center">
                             <template slot-scope="scope">
-                                <el-button type="primary" size="mini">编辑</el-button>
-                                <el-button size="mini" type="danger">删除</el-button>
+                                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+                                <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -331,6 +331,87 @@
                 handleCurrentChange(currentPage) {
                     this.pagination.currentPage = currentPage;
                     this.findPage();
+                },
+                //编辑表单项
+                handleUpdate(row) {
+                    //清空表单数据
+                    this.formData = {};
+                    this.checkitemIds = [];
+                    //将卡片默认弹出为第一项
+                    this.activeName = 'first';
+                    //将编辑页面展示出来
+                    this.dialogFormVisible4Edit = true;
+                    //发送ajax请求回显数据
+                    axios.get("/setmeal/findById.do?id=" + row.id).then((res) => {
+                        if (res.data.flag) {
+                            //数据回显成功
+                            this.formData = res.data.data;
+                        } else {
+                            //数据回显失败
+                            this.$message.error(res.data.message);
+                        }
+                    });
+                    //发送ajax请求查看所有检查项
+                    axios.get("/checkgroup/findAll.do").then((res) => {
+                        if (res.data.flag) {  //查询成功
+                            this.tableData = res.data.data;
+                            //发送Ajax请求查询有哪些项目被选中
+                            axios.get("/setmeal/findGroupBySetmeal.do?id=" + row.id).then((res) => {
+                                this.checkgroupIds = res.data.data;
+                            });
+                        } else {  //查询失败
+                            this.$message.error(res.data.message);
+                        }
+                    });
+                },
+                // 删除
+                handleDelete(row) {
+                    this.$confirm("你确定要删除吗？", "警告", {
+                        type : "warning"
+                    }).then(() => {
+                        //发送Ajax请求删除数据
+                        axios.get("/setmeal/delete.do?id=" + row.id).then((res) => {
+                            if (res.data.flag) {
+                                this.$message({
+                                    type : "success",
+                                    message : res.data.message
+                                });
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        }).finally(() => {
+                            this.findPage();
+                        });
+                    }).catch(() => {
+                        this.$message({
+                            type : "info",
+                            message : "取消删除"
+                        });
+                    });
+                },
+                //编辑
+                handleEdit() {
+                    this.$confirm("你确定要提交吗？", "提示", {
+                        type: "info"
+                    }).then(() => {
+                        //关闭编辑窗口
+                        this.dialogFormVisible4Edit = false;
+                        //发送Ajax请求将修改数据添加到数据库
+                        axios.post("/setmeal/edit.do?checkgroupIds=" + this.checkgroupIds, this.formData).then((res) => {
+                            if (res.data.flag) {
+                                //编辑成功
+                                this.$message({
+                                    type: "success",
+                                    message: res.data.message
+                                });
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        }).finally(() => {
+                            this.findPage();
+                        });
+                    }).catch(() => {
+                    });
                 }
             }
         })

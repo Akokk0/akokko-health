@@ -66,4 +66,8 @@ public class MessageConstant {
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
     public static final String CHECK_CHECKGROUP_NULL = "选择检查组不能为空";
     public static final String CHECK_CHECKITEM_NULL = "选择检查项不能为空";
+    public static final String EDIT_SETMEAL_SUCCESS = "编辑套餐成功";
+    public static final String EDIT_SETMEAL_FAIL = "编辑套餐失败";
+    public static final String DELETE_SETMEAL_SUCCESS = "删除套餐成功";
+    public static final String DELETE_SETMEAL_FAIL = "删除套餐失败";
 }

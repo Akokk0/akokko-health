@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -60,5 +61,39 @@ public class SetmealController {
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         return setmealService.findPage(queryPageBean);
+    }
+
+    @RequestMapping("/findGroupBySetmeal")
+    public Result findGroupBySetmeal(Integer id) {
+        try {
+            List<Integer> list = setmealService.findGroupBySetmeal(id);
+            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
+
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
+        try {
+            if (checkgroupIds != null && checkgroupIds.length > 0) return new Result(false, MessageConstant.CHECK_CHECKGROUP_NULL);
+            setmealService.edit(setmeal, checkgroupIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.EDIT_SETMEAL_FAIL);
+        }
+        return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
+    }
+
+    @RequestMapping("/delete")
+    public Result delete(Integer id) {
+        try {
+            setmealService.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_SETMEAL_SUCCESS);
+        }
+        return new Result(true, MessageConstant.DELETE_SETMEAL_FAIL);
     }
 }
