@@ -54,18 +54,32 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
+    public Setmeal findById(Integer id) {
+        return setmealDao.findById(id);
+    }
+
+    @Override
     public List<Integer> findGroupBySetmeal(Integer id) {
+        //直接返回List集合
         return setmealDao.findGroupBySetmeal(id);
     }
 
     @Override
     public void edit(Setmeal setmeal, Integer[] checkgroupIds) {
-
+        //将新创建的套餐写入数据库
+        setmealDao.edit(setmeal);
+        //清空之前setmeal的选择项
+        setmealDao.deleteCheckgroupIds(setmeal.getId());
+        //将现在的checkgroupIds添加绑定
+        this.connectionSetmealAndCheckgroup(setmeal.getId(), checkgroupIds);
     }
 
     @Override
     public void delete(Integer id) {
-
+        //删除绑定的检查组
+        setmealDao.deleteCheckgroupIds(id);
+        //删除套餐
+        setmealDao.delete(id);
     }
 
     /**

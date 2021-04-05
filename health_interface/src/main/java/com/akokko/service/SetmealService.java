@@ -12,6 +12,8 @@ public interface SetmealService {
 
     PageResult findPage(QueryPageBean queryPageBean);
 
+    Setmeal findById(Integer id);
+
     List<Integer> findGroupBySetmeal(Integer id);
 
     void edit(Setmeal setmeal, Integer[] checkgroupIds);

@@ -63,6 +63,11 @@ public class SetmealController {
         return setmealService.findPage(queryPageBean);
     }
 
+    @RequestMapping("/findById")
+    public Setmeal findById(Integer id) {
+        return setmealService.findById(id);
+    }
+
     @RequestMapping("/findGroupBySetmeal")
     public Result findGroupBySetmeal(Integer id) {
         try {
