@@ -70,4 +70,5 @@ public class MessageConstant {
     public static final String EDIT_SETMEAL_FAIL = "编辑套餐失败";
     public static final String DELETE_SETMEAL_SUCCESS = "删除套餐成功";
     public static final String DELETE_SETMEAL_FAIL = "删除套餐失败";
+    public static final String UPLOAD_IMG_NULL = "上传图片不能为空";
 }

@@ -50,6 +50,7 @@ public class SetmealController {
     public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         try {
             if (checkgroupIds == null || checkgroupIds.length == 0) return new Result(false, MessageConstant.CHECK_CHECKGROUP_NULL);
+            if (setmeal.getImg() == null) return new Result(false, MessageConstant.UPLOAD_IMG_NULL);
             setmealService.add(setmeal, checkgroupIds);
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +89,8 @@ public class SetmealController {
     @RequestMapping("/edit")
     public Result edit(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         try {
-            if (checkgroupIds != null && checkgroupIds.length > 0) return new Result(false, MessageConstant.CHECK_CHECKGROUP_NULL);
+            if (checkgroupIds == null || checkgroupIds.length == 0) return new Result(false, MessageConstant.CHECK_CHECKGROUP_NULL);
+            if (setmeal.getImg() == null) return new Result(false, MessageConstant.UPLOAD_IMG_NULL);
             setmealService.edit(setmeal, checkgroupIds);
         } catch (Exception e) {
             e.printStackTrace();
