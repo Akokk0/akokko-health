@@ -419,10 +419,10 @@
                 },
                 // 重置表单
                 resetForm() {
-                    //将图片清空
-                    this.imageUrl = "";
                     //将表单数据清空
                     this.formData = {};
+                    //将图片清空
+                    this.imageUrl = "";
                     //复选框清空
                     this.checkgroupIds = [];
                     //默认选到第一项
@@ -450,9 +450,8 @@
                 },
                 //编辑表单项
                 handleUpdate(row) {
-                    //清空表单数据
-                    this.formData = {};
-                    this.checkitemIds = [];
+                    //重置表单
+                    this.resetForm();
                     //将卡片默认弹出为第一项
                     this.activeName = 'first';
                     //将编辑页面展示出来
@@ -462,6 +461,8 @@
                         if (res.data.flag) {
                             //数据回显成功
                             this.formData = res.data.data;
+                            //回显图片
+                            this.imageUrl = "http://qqpvq5pwj.hd-bkt.clouddn.com/" + res.data.data.img;
                         } else {
                             //数据回显失败
                             this.$message.error(res.data.message);
