@@ -19,4 +19,8 @@
     <select id="CountByOrderDate" parameterType="date" resultType="long">
         select count(id) from t_ordersetting where orderDate = #{orderDate}
     </select>
+
+    <select id="getOrdersettingByMonth" parameterType="map" resultType="com.akokko.pojo.OrderSetting">
+        select * from t_ordersetting where orderDate between #{begin} and #{end}
+    </select>
 </mapper>

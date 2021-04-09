@@ -230,6 +230,18 @@
                         { date: 6, number: 120, reservations: 1 },
                         { date: 8, number: 120, reservations: 1 }
                     ];*/
+
+                    //发生Ajax请求
+                    axios.post("/ordersetting/getOrdersettingByMonth.do?date=" + this.currentYear + "-" + this.currentMonth).then((res) => {
+                        if (res.data.flag) {  //判断请求是否成功
+                            //请求成功
+                            this.leftobj = res.data.data;
+                        } else {
+                            //请求失败
+                            this.$message.error(res.data.message);
+                        }
+                    });
+
                 },
 				//切换到当前月份
                 goCurrentMonth: function (year, month) {
