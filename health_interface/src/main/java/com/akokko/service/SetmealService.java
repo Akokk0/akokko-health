@@ -20,4 +20,6 @@ public interface SetmealService {
 
     void delete(Integer id);
 
+    List<Setmeal> getSetmeal();
+
 }

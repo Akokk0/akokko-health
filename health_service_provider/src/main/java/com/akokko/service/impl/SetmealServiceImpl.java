@@ -82,6 +82,11 @@ public class SetmealServiceImpl implements SetmealService {
         setmealDao.delete(id);
     }
 
+    @Override
+    public List<Setmeal> getSetmeal() {
+        return setmealDao.getSetmeal();
+    }
+
     /**
      * 将套餐与检查组进行绑定
      * @param setmealId

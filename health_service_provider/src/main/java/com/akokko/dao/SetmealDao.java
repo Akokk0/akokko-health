@@ -24,4 +24,6 @@ public interface SetmealDao {
 
     void delete(Integer id);
 
+    List<Setmeal> getSetmeal();
+
 }
