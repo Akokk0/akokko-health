@@ -146,14 +146,25 @@
                         inputPattern: /^[0-9]*[1-9][0-9]*$/,
                         inputErrorMessage: '只能输入正整数'
                     }).then(({ value }) => {
-                        this.$message({
-                            type: 'success',
-                            message: '你的邮箱是: ' + value
+                        axios.post("/ordersetting/editNumberByDate.do", {
+                            orderDate: this.formatDate(day.getFullYear(),day.getMonth()+1,day.getDate()),
+                            number:value
+                        }).then((res) => {
+                            if (res.data.flag) {
+                                this.$message({
+                                    type: "success",
+                                    message: res.data.message
+                                });
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        }).finally(() => {
+                            this.initData(this.formatDate(day.getFullYear(), day.getMonth() + 1, 1));
                         });
                     }).catch(() => {
                         this.$message({
                             type: 'info',
-                            message: '取消输入'
+                            message: '已取消'
                         });
                     });
                 },

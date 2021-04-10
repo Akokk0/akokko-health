@@ -8,4 +8,5 @@ import java.util.Map;
 public interface OrderSettingService {
     void add(List<OrderSetting> data);
     List<Map> getOrdersettingByMonth(String date);
+    void editNumberByDate(OrderSetting orderSetting);
 }
