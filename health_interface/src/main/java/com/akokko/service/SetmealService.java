@@ -22,4 +22,6 @@ public interface SetmealService {
 
     List<Setmeal> getSetmeal();
 
+    Setmeal findFullSetmealById(Integer id);
+
 }

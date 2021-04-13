@@ -156,6 +156,11 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealDao.getSetmeal();
     }
 
+    @Override
+    public Setmeal findFullSetmealById(Integer id) {
+        return setmealDao.findFullSetmealById(id);
+    }
+
     /**
      * 将套餐与检查组进行绑定
      * @param setmealId

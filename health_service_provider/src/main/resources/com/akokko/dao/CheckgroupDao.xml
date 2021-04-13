@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.akokko.dao.CheckgroupDao">
+
+    <resultMap id="baseResultMap" type="com.akokko.pojo.CheckGroup">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+    </resultMap>
+
+    <resultMap id="findByIdResultMap" type="com.akokko.pojo.CheckGroup" extends="baseResultMap">
+        <collection property="checkItems"
+                    ofType="com.akokko.pojo.CheckItem"
+                    column="id"
+                    select="com.akokko.dao.CheckitemDao.finditemById">
+        </collection>
+    </resultMap>
+
     <!-- 新增 -->
     <insert id="add" parameterType="com.akokko.pojo.CheckGroup">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
@@ -68,5 +87,9 @@
 
     <select id="findAll" resultType="com.akokko.pojo.CheckGroup">
         select * from t_checkgroup
+    </select>
+
+    <select id="findCheckgroupById"  parameterType="int" resultMap="findByIdResultMap">
+        select * from t_checkgroup where id in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{setmeal_id})
     </select>
 </mapper>
