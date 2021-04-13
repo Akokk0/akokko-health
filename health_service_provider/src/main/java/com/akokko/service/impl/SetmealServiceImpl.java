@@ -9,13 +9,22 @@ import com.akokko.service.SetmealService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import redis.clients.jedis.JedisPool;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service(interfaceClass = SetmealService.class)
 @Transactional
@@ -27,6 +36,12 @@ public class SetmealServiceImpl implements SetmealService {
     @Autowired
     private JedisPool jedisPool;
 
+    @Autowired
+    private FreeMarkerConfigurer freeMarkerConfigurer;
+
+    @Value("out_put_path")
+    private String outPutPath;
+
     @Override
     public void add(Setmeal setmeal, Integer[] checkgroupIds) {
         //将套餐信息写入到数据库
@@ -37,6 +52,60 @@ public class SetmealServiceImpl implements SetmealService {
         this.connectionSetmealAndCheckgroup(setmealId, checkgroupIds);
         //将文件名称写入到redis
         jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES, setmeal.getImg());
+        //生成静态页面
+        generateMobileStaticHtml();
+    }
+
+    /*生成手机静态页面*/
+    public void generateMobileStaticHtml() {
+        //查询Dao
+        List<Setmeal> setmeal = setmealDao.getSetmeal();
+        //生成套餐列表页
+        generateMobileSetmealHtml(setmeal);
+        //生成套餐详情页
+        generateMobileSetmealDetailHtml(setmeal);
+    }
+
+    /*生成套餐列表页*/
+    public void generateMobileSetmealHtml(List<Setmeal> setmeals) {
+        Map map = new HashMap();
+        map.put("setmealList", setmeals);
+        this.generateHtml("mobile_setmeal.ftl","m_setmeal.html", map);
+    }
+
+    /*生成套餐详情页面*/
+    public void generateMobileSetmealDetailHtml(List<Setmeal> setmeals) {
+        for (Setmeal setmeal : setmeals) {
+            Map map = new HashMap();
+            map.put("setmeal", this.findById(setmeal.getId()));
+            this.generateHtml("mobile_setmeal_detail.ftl", "setmeal_detail_" + setmeal.getId() + ".html", map);
+        }
+    }
+
+    public void generateHtml(String templateName,String htmlPageName,Map map) {
+        //获取配置对象
+        Configuration configuration = freeMarkerConfigurer.getConfiguration();
+        //
+        Writer writer = null;
+        try {
+            //生成文件路径
+            writer = new FileWriter(new File(outPutPath + "/" + htmlPageName));
+            //加载模板文件
+            Template template = configuration.getTemplate(templateName);
+            //生成文件
+            template.process(map, writer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //关闭流
+            if (null != writer) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
