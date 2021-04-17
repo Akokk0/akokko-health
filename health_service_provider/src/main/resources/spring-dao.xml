@@ -18,10 +18,10 @@
     <!--数据源-->
     <bean id="dataSource"
           class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
-        <property name="username" value="health" />
-        <property name="password" value="root" />
+        <property name="username" value="AkokkoHealth" />
+        <property name="password" value="Akokko123." />
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://106.14.73.110:3306/health" />
+        <property name="url" value="jdbc:mysql://akokko.com:3306/akokkohealth" />
     </bean>
     <!--spring和mybatis整合的工厂bean-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
