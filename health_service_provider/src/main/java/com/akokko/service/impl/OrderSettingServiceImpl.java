@@ -22,7 +22,7 @@ public class OrderSettingServiceImpl implements OrderSettingService {
             //遍历集合
             for (OrderSetting ordersetting : data) {
                 //先判断日期是否已经被写入
-                long count = orderSettingDao.CountByOrderDate(ordersetting.getOrderDate());
+                long count = orderSettingDao.findCountByOrderDate(ordersetting.getOrderDate());
                 if (count > 0) {  //日期被写入
                     orderSettingDao.editNumberByOrderDate(ordersetting);
                 } else {  //日期未被写入
@@ -42,7 +42,7 @@ public class OrderSettingServiceImpl implements OrderSettingService {
         data.put("begin", begin);
         data.put("end", end);
         //调用Dao查询
-        List<OrderSetting> values = orderSettingDao.getOrdersettingByMonth(data);
+        List<OrderSetting> values = orderSettingDao.getOrderSettingByMonth(data);
         //遍历集合,存入数据
         List<Map> result = new ArrayList<>();
         if (values != null && values.size() > 0) {
@@ -63,7 +63,7 @@ public class OrderSettingServiceImpl implements OrderSettingService {
     public void editNumberByDate(OrderSetting orderSetting) {
         Date orderDate = orderSetting.getOrderDate();
         //获取当前日前是否已进行预约设置
-        long count = orderSettingDao.CountByOrderDate(orderDate);
+        long count = orderSettingDao.findCountByOrderDate(orderDate);
         if (count > 0) {
             //当前日前已经进行预约设置
             orderSettingDao.editNumberByOrderDate(orderSetting);
