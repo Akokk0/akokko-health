@@ -7,6 +7,7 @@ import com.akokko.entity.Result;
 import com.akokko.pojo.CheckItem;
 import com.akokko.service.CheckitemService;
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class CheckitemController {
     @Reference
     private CheckitemService checkitemService;
 
+    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")  //权限校验
     @RequestMapping("/add")
     public Result add(@RequestBody CheckItem checkItem) {
         try {
@@ -32,12 +34,14 @@ public class CheckitemController {
         return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
     }
 
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")  //权限校验
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = checkitemService.findPage(queryPageBean);
         return pageResult;
     }
 
+    @PreAuthorize("hasAuthority('CHECKITEM_DELETE')")  //权限校验
     @RequestMapping("/delete")
     public Result delete(Integer id) {
         try {
@@ -61,6 +65,7 @@ public class CheckitemController {
         }
     }
 
+    @PreAuthorize("hasAuthority('CHECKITEM_EDIT')")//权限校验
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckItem checkItem) {
         try {

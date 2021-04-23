@@ -8,6 +8,9 @@ import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service(interfaceClass = MemberService.class)
 @Transactional
 public class MemberServiceImpl implements MemberService {
@@ -28,5 +31,22 @@ public class MemberServiceImpl implements MemberService {
             member.setPassword(md5_password);
         }
         memberDao.add(member);
+    }
+
+    @Override
+    public List<Integer> findMemberCountByMonth(List<String> date) {
+        //创建人数集合
+        List<Integer> memberCount = new ArrayList<>();
+        //初始化数据
+        if (date != null) {
+            for (String s : date) {
+                s = s + ".31";
+                //调用dao查询数据库
+                Integer count = memberDao.findMemberCountBeforeDate(s);
+                //将数据添加到数组里
+                memberCount.add(count);
+            }
+        }
+        return memberCount;
     }
 }

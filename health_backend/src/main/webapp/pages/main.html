@@ -37,14 +37,16 @@
                         <el-dropdown class="avatar-container right-menu-item" trigger="click">
                             <div class="avatar-wrapper">
                                 <img src="../img/user2-160x160.jpg" class="user-avatar">
-                                Jay.Liu
+                                {{username}}
                             </div>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item divided>
                                     <span style="display:block;">修改密码</span>
                                 </el-dropdown-item>
                                 <el-dropdown-item divided>
-                                        <span style="display:block;">退出</span>
+                                        <span style="display:block;">
+                                            <a href="/logout.do">退出</a>
+                                        </span>
                                     </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -78,10 +80,12 @@
 <script src="../js/vue.js"></script>
 <script src="../plugins/elementui/index.js"></script>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
 <script>
     new Vue({
         el: '#app',
         data:{
+            username: '',
             menuList:[
                 {
                     "path": "1",
@@ -177,6 +181,13 @@
                     ]
                 }
             ]
+        },
+        //🪝函数
+        created() {
+            //发送ajax请求获得用户名
+            axios.get("/user/getUsername.do").then((res) => {
+                this.username = res.data.data;
+            });
         }
     });
     $(function() {
