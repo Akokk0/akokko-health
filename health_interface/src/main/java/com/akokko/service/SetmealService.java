@@ -5,6 +5,7 @@ import com.akokko.entity.QueryPageBean;
 import com.akokko.pojo.Setmeal;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SetmealService {
 
@@ -23,5 +24,7 @@ public interface SetmealService {
     List<Setmeal> getSetmeal();
 
     Setmeal findFullSetmealById(Integer id);
+
+    List<Map<String, Object>> findSetmealCount();
 
 }
